@@ -4,12 +4,13 @@ import { World } from '@src/core'
 
 function App() {
   const mount = useRef<HTMLDivElement>(null)
+  const isDev = import.meta.env.MODE === 'development'
 
   useEffect(() => {
     if (!mount.current)
       return
 
-    const world = new World(mount.current)
+    const world = new World(mount.current, isDev)
 
     return () => {
       world.destroy()
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="h-full w-full box-border border-5px border-solid border-sky-300">
-      <div ref={mount} className='h-full w-full box-border' />
+      <div ref={mount} className="h-full w-full box-border" />
     </div>
   )
 }

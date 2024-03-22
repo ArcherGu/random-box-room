@@ -1,5 +1,7 @@
-import { MapData } from "../map_data"
-import { Room } from "./room"
+import type { Application } from 'pixi.js'
+import { MapData } from '../map_data'
+import type { Player } from '../player'
+import { Room } from './room'
 
 // First, we will create 10 rooms for testing
 const ROOM_COUNT = 10
@@ -7,25 +9,44 @@ const ROOM_COUNT = 10
 export class Map {
   private data: MapData
   private rooms: Room[] = []
-  private startingRoom: Room
-  constructor() {
-    // create special starting room
-    this.startingRoom = new Room({ x: 0, y: 0, rows: 10, cols: 10 })
 
-    this.data = new MapData({
-      roomCount: ROOM_COUNT,
-      startingRoom: this.startingRoom.getData(),
-      roomCreator: this.roomCreator
+  constructor(private player: Player, private app: Application) {
+    this.data = new MapData()
+    this.initMap()
+  }
+
+  initMap() {
+    this.rooms.length = 0
+    const startingRoom = new Room(this, 0, 0)
+    this.rooms.push(startingRoom)
+    this.data.initRoomsData(ROOM_COUNT, {
+      // create special starting room
+      startingRoom: startingRoom.getData(),
+      roomCreator: (x: number, y: number) => {
+        const room = new Room(this, x, y)
+        this.rooms.push(room)
+        return room.getData()
+      },
     })
+  }
+
+  update() {
+    this.rooms.forEach(room => room.update())
   }
 
   getData() {
     return this.data
   }
 
-  private roomCreator = (x: number, y: number) => {
-    const room = new Room({ x, y })
-    this.rooms.push(room)
-    return room.getData()
+  getPlayer() {
+    return this.player
+  }
+
+  getApp() {
+    return this.app
+  }
+
+  getRooms() {
+    return this.rooms
   }
 }

@@ -1,4 +1,4 @@
-import type { RoomData } from "./room_data"
+import type { RoomData } from './room_data'
 
 /**
  * x,y: current room's opposite direction's room's coordinates
@@ -11,7 +11,7 @@ export enum RoomDirection {
   Top = 'top',
   Left = 'left',
   Bottom = 'bottom',
-  Right = 'right'
+  Right = 'right',
 }
 
 export function getOppositeRoomDir(dir: RoomDirection) {
@@ -28,11 +28,11 @@ export function getOppositeRoomDir(dir: RoomDirection) {
 }
 
 export function getRoomSurroundings(room: RoomData): RoomPath[] {
-  const { x, y } = room.getPos()
+  const { x, y } = room.getDir()
   return [
     [x, y + 1, room, RoomDirection.Top],
     [x + 1, y, room, RoomDirection.Left],
     [x, y - 1, room, RoomDirection.Bottom],
-    [x - 1, y, room, RoomDirection.Right]
+    [x - 1, y, room, RoomDirection.Right],
   ]
 }
