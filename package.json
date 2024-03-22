@@ -1,8 +1,16 @@
 {
   "name": "random-box-room",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@8.15.5",
+  "description": "A random box room",
+  "author": "ArcherGu (https://github.com/ArcherGu/)",
+  "keywords": [
+    "game",
+    "canvas",
+    "pixi.js"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
